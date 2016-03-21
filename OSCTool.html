@@ -1,0 +1,80 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>OSCTool</title>
+</head>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script type="text/javascript" src='OSCTool.js'></script>
+
+<body>
+<div div ng-app="myApp" ng-controller="myCtrl"  style="text-align: center">
+	<div class="row" style="font-weight: bold;">
+		<div class="col-md-2"></div>
+		<div class="col-md-2" ng-repeat = 'i in ["FIFO","SJN","SRTF","RR"]'>{{i}}</div>
+	</div>
+
+	<div class="row" style="font-weight: bold; border-top-width: 10px; border-style: solid">
+		<div class="col-md-2" style="text-align: right;">Excute + Arrival</div>
+		<div ng-repeat = 'i in ["FIFO","SJN","SRTF","RR"]' class="col-md-2">
+			<div class="col-md-4">TAT</div>	
+			<div class="col-md-4">WT</div>
+			<div class="col-md-4">RT</div>
+		</div>
+		
+	</div>
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-1" style="padding-left: 0px">
+			<textarea id="textarea" rows="10" cols="10">7 0&#13;&#10;4 2&#13;&#10;1 4&#13;&#10;4 5&#13;&#10;</textarea>	
+		</div>
+		<div class="col-md-8">
+			<div class="row" ng-repeat='process in data'>
+				<div ng-repeat='algo in process.algos'>
+					<div class="col-md-1">{{algo.TAT}}</div>
+					<div class="col-md-1">{{algo.WT}}</div>
+					<div class="col-md-1">{{algo.RT}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" style="border-top-width: 5px; border-style: solid; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px">
+		<div class="col-md-1"></div>
+		<div class="col-md-1" style="text-align: left; font-weight: bold">Quantum</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-1" style="padding-left: 0px;">
+			<input id="quantum" size="8" value="2">
+		</div>
+		<div class="col-md-2" style="text-align: left; padding-left: 30px" ng-repeat = 'i in ["FIFO","SJN","SRTF","RR"]'>
+			<li>avg.TAT: 
+				<span ng-show="avg[i]">{{avg[i].sumTAT + "/" + avg.n + " = "}}</span>
+				<span>{{avg[i].sumTAT/avg.n | number:2}}</span>
+			</li>
+			<li>avg.WT: 
+				<span ng-show="avg[i]">{{avg[i].sumWT + "/" + avg.n + " = "}}</span>
+				<span>{{avg[i].sumWT/avg.n | number:2}}</span>
+			</li>
+			<li>avg.RT: 
+				<span ng-show="avg[i]">{{avg[i].sumRT + "/" + avg.n + " = "}}</span>
+				<span>{{avg[i].sumRT/avg.n | number:2}}</span>
+			</li>
+		</div>
+	</div>
+
+	<div class="row" style="height: 20px; border-top-width: 5px; border-style: solid; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px">
+	</div>
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<button class="col-md-4" ng-click="calculate()">Calculate</button>
+	</div>
+</div>
+	
+</body>
+
+</html>
